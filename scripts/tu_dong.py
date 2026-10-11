@@ -90,21 +90,30 @@ def chay_mot_lan(da_loi):
     py = sys.executable
     if WIN and py.lower().endswith("pythonw.exe"):
         py = py[:-len("pythonw.exe")] + "python.exe"
-    r = subprocess.run([py, os.path.join(HERE, "tao_phieu.py")], cwd=ROOT, env=env,
-                       capture_output=True, text=True, encoding="utf-8", errors="replace",
-                       creationflags=NO_WINDOW)
-    out = r.stdout + r.stderr
+    try:
+        r = subprocess.run([py, os.path.join(HERE, "tao_phieu.py")], cwd=ROOT, env=env,
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           creationflags=NO_WINDOW, timeout=300)
+        out = r.stdout + r.stderr
+    except subprocess.TimeoutExpired:
+        out = "*** Tạo phiếu quá 5 phút — đã dừng. Chạy tay TAO_PHIEU.bat để xem lỗi."
     ds = os.path.join(HERE, "_danh_sach_file_moi.txt")
     tao = []
     if os.path.exists(ds):
         with open(ds, encoding="utf-8") as f:
             tao = [ln.split("|")[0] for ln in f if ln.strip()]
     if tao and WIN:
-        w = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
-                            "-File", os.path.join(HERE, "lam_sach_bang_word.ps1"), ds],
-                           cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace",
-                           creationflags=NO_WINDOW)
-        out += "\n" + w.stdout + w.stderr
+        try:
+            w = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
+                                "-File", os.path.join(HERE, "lam_sach_bang_word.ps1"), ds],
+                               cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               creationflags=NO_WINDOW, timeout=180)
+            out += "\n" + w.stdout + w.stderr
+        except subprocess.TimeoutExpired:
+            # Word treo (thường do hộp thoại kích hoạt/khôi phục file) -> đóng Word ẩn, báo để mở tay kiểm tra
+            subprocess.run(["taskkill", "/F", "/IM", "WINWORD.EXE"], capture_output=True, creationflags=NO_WINDOW)
+            out += ("\n!!! Word không phản hồi sau 3 phút (có thể đang hiện hộp thoại) — phiếu ĐÃ tạo nhưng chưa "
+                    "được Word làm sạch: mở từng file bằng Word, lưu lại trước khi gửi.")
     ghi_log(f"\n######## {datetime.datetime.now():%d/%m/%Y %H:%M:%S} ########\n{out}")
 
     # File còn nằm lại trong hàng chờ = lỗi dữ liệu -> nhớ để không lặp lại mỗi 15 giây
