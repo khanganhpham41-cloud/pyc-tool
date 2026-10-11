@@ -14,6 +14,6 @@ echo ==== Bat dau chay ngam ====
 start "" "%PYW%" "%~dp0scripts\tu_dong.py"
 echo.
 echo XONG. Tu nay chi can bo file .json vao HANG_CHO (laptop hoac Google Drive\PYC_PT\HANG_CHO)
-echo -> phieu tu tao trong khoang 30 giay, co thong bao goc man hinh.
+echo ^-^> phieu tu tao trong khoang 30 giay, co thong bao goc man hinh.
 echo Nhat ky: NHAT_KY_TU_DONG.txt     Tat: TAT_TU_DONG.bat
 pause
