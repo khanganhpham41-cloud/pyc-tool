@@ -110,10 +110,10 @@ def chay_mot_lan(da_loi):
                                creationflags=NO_WINDOW, timeout=180)
             out += "\n" + w.stdout + w.stderr
         except subprocess.TimeoutExpired:
-            # Word treo (thường do hộp thoại kích hoạt/khôi phục file) -> đóng Word ẩn, báo để mở tay kiểm tra
-            subprocess.run(["taskkill", "/F", "/IM", "WINWORD.EXE"], capture_output=True, creationflags=NO_WINDOW)
+            # Word treo (thường do hộp thoại kích hoạt/khôi phục file). KHÔNG tắt Word bằng lệnh —
+            # có thể làm mất văn bản Vinh đang soạn. Chỉ báo để mở tay kiểm tra.
             out += ("\n!!! Word không phản hồi sau 3 phút (có thể đang hiện hộp thoại) — phiếu ĐÃ tạo nhưng chưa "
-                    "được Word làm sạch: mở từng file bằng Word, lưu lại trước khi gửi.")
+                    "được Word làm sạch: mở từng file bằng Word, lưu lại trước khi gửi. Nếu có hộp thoại Word đang chờ, bấm đóng nó.")
     ghi_log(f"\n######## {datetime.datetime.now():%d/%m/%Y %H:%M:%S} ########\n{out}")
 
     # File còn nằm lại trong hàng chờ = lỗi dữ liệu -> nhớ để không lặp lại mỗi 15 giây
