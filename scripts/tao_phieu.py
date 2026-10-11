@@ -239,6 +239,60 @@ def write_log(rows_phieu, rows_mau, warnings_out):
         warnings_out.append("Sổ theo dõi đang mở trong Excel — đã ghi tạm, sẽ tự gộp vào sổ ở lần chạy sau")
 
 
+def _norm_kh(x):
+    return re.sub(r"\s+", " ", str(x or "")).strip().lower()
+
+
+def replace_old(info, warnings_out):
+    """Phiếu sửa ghi đè phiếu sai: xóa dòng sổ + file .docx cũ của cùng khách hàng.
+    Số cũ lấy từ thong_tin.thay_the ("100907HL" hoặc "100907HL; 100907VL") + chính số mới (tạo lại cùng số).
+    Phiếu cùng số nhưng KHÁC khách hàng không đụng tới. Trả về danh sách file cũ cần xóa sau khi tạo xong."""
+    so_cu = {x.strip() for x in re.split(r"[;,\s]+", str(info.get("thay_the", ""))) if x.strip()}
+    so_cu |= {x for x in (info.get("so_hh"), info.get("so_vs")) if x}
+    if not so_cu or not os.path.exists(LOG_FILE):
+        return []
+    kh = _norm_kh(info.get("khach_hang"))
+    try:
+        wb = openpyxl.load_workbook(LOG_FILE)
+    except Exception:
+        return []
+    old_files, n_p, n_m = [], 0, 0
+    for name, col_kh, col_file in (("PHIEU", 4, 10), ("MAU", 8, None)):
+        ws = wb[name]
+        rows = [r for r in range(2, ws.max_row + 1)
+                if str(ws.cell(r, 3).value or "") in so_cu and _norm_kh(ws.cell(r, col_kh).value) == kh]
+        for r in reversed(rows):
+            if col_file and ws.cell(r, col_file).value:
+                old_files.append(os.path.join(ROOT, str(ws.cell(r, col_file).value).replace("\\", os.sep).replace("/", os.sep)))
+            ws.delete_rows(r)
+        if name == "PHIEU":
+            n_p = len(rows)
+        else:
+            n_m = len(rows)
+    if not n_p and not n_m:
+        return []
+    try:
+        for name in ("PHIEU", "MAU"):
+            wb[name].auto_filter.ref = wb[name].dimensions
+        wb.save(LOG_FILE)
+        warnings_out.append(f"Ghi đè phiếu cũ {', '.join(sorted(so_cu))}: đã xóa {n_p} dòng phiếu, {n_m} dòng mẫu trong sổ")
+    except PermissionError:
+        warnings_out.append("Sổ theo dõi đang mở trong Excel — CHƯA xóa được dòng của phiếu cũ, đóng Excel rồi xóa tay")
+    return old_files
+
+
+def remove_old_files(old_files, keep, warnings_out):
+    keep = {os.path.normcase(os.path.abspath(k)) for k in keep}
+    for f in dict.fromkeys(old_files):
+        if os.path.normcase(os.path.abspath(f)) in keep or not os.path.exists(f):
+            continue
+        try:
+            os.remove(f)
+            warnings_out.append(f"Đã xóa file phiếu cũ: {os.path.relpath(f, ROOT)}")
+        except PermissionError:
+            warnings_out.append(f"File phiếu cũ đang mở trong Word, chưa xóa được: {os.path.relpath(f, ROOT)}")
+
+
 def code_range(lst):
     codes = [x["ma"] for x in lst if x.get("ma")]
     if not codes:
@@ -290,6 +344,8 @@ def process(info, samples, src_desc, src_path=None):
             print("   -", e)
         return 2, []
 
+    replace_warn = []
+    old_files = replace_old(info, replace_warn)
     hoa, sinh, code_warn = [], [], []
     UNKNOWN.clear()
     for s in samples:
@@ -333,11 +389,14 @@ def process(info, samples, src_desc, src_path=None):
         if not so:
             warnings.append(f"Số {'HH' if kind == 'H' else 'VS'} để trống — điền tay sau khi xác nhận số thứ tự trong ngày")
         elif (loai, so) in seen:
-            warnings.append(f"Số {so} ĐÃ có phiếu tạo lúc {seen[(loai, so)]} — bản mới lưu thêm hậu tố _v2; kiểm tra có trùng số không")
+            warnings.append(f"Số {so} ĐÃ có phiếu tạo lúc {seen[(loai, so)]} (phiếu của khách hàng khác) — kiểm tra có trùng số không")
         sub_dir = os.path.join(OUT_DIR, tag, ym[0], ym[1])
         os.makedirs(sub_dir, exist_ok=True)
         lead = safe_name(so) if so else "CHUA_SO_" + now.strftime("%d%m_%H%M")
-        out = unique_path(os.path.join(sub_dir, f"{lead}_{base}.docx"))
+        out = os.path.join(sub_dir, f"{lead}_{base}.docx")
+        if not (so and os.path.normcase(os.path.abspath(out)) in
+                {os.path.normcase(os.path.abspath(f)) for f in old_files}):
+            out = unique_path(out)   # chỉ ghi đè đúng file của phiếu cũ cùng khách hàng
         sizes = make_form(kind, info, [dict(x) for x in lst], per, out, warnings)
         if sys.platform != "win32" and len(sizes) > 1 and not os.environ.get("NO_RELAUNDER"):
             relaunder_linux(out)
@@ -365,6 +424,8 @@ def process(info, samples, src_desc, src_path=None):
         shutil.copy2(src_path, unique_path(os.path.join(arch, f"{safe_name(so_all)}_{base}{ext}")))
 
     write_log(log_p, log_m, extra_warn)
+    remove_old_files(old_files, [r[5] for r in report], replace_warn)
+    extra_warn = replace_warn + extra_warn
 
     print(f"\n================ KẾT QUẢ: {src_desc} ================")
     for tag, n, sizes, cts, warns, out in report:
