@@ -26,5 +26,6 @@ KET QUA:
  DU_LIEU_NHAP\<nam>\<nam-thang>\...json   du lieu goc (sua json -> bo lai HANG_CHO de tao lai)
  SO_THEO_DOI_PYC.xlsx                       so theo doi phieu / ma mau
 
-PYC_TOOL.zip tu dong cap nhat sau moi lan chay va chep len Google Drive\PYC_PT
- -> laptop tat, Claude lay zip tu Drive de xuat .docx tren dien thoai.
+LAPTOP TAT (dung dien thoai): chi can gui thong tin vao Project.
+ Claude tu lay cong cu tu kho GitHub rieng tu khanganhpham41-cloud/pyc-tool, tao phieu .docx gui trong chat,
+ va bo JSON len Google Drive\PYC_PT\HANG_CHO -> mo laptop la tu ghi so. Khong can dinh kem gi.
