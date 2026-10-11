@@ -1,5 +1,5 @@
 {
- "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!).",
+ "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!). QUY TẮC: chỉ tiêu ghi tên chất cụ thể thì giữ đúng tên chất, KHÔNG gộp vào tên nhóm '(nhóm)' hay chất khác — tên nhóm làm lab hiểu nhầm chạy cả nhóm. Alias của khóa nhóm chỉ là cách gọi nhóm.",
  "hoa": {
   "Aflatoxin B1": [
    "aflatoxin b1",
@@ -55,7 +55,6 @@
   "Hàn the (Borat)": [
    "hàn the",
    "borat",
-   "borate",
    "acid boric",
    "axit boric",
    "boric acid",
@@ -251,10 +250,7 @@
   "Tetracycline (nhóm)": [
    "tetracycline",
    "tetracyclines",
-   "nhóm tetracycline",
-   "oxytetracycline",
-   "chlortetracycline",
-   "doxycycline"
+   "nhóm tetracycline"
   ],
   "Sulfonamide (nhóm)": [
    "sulfonamide",
@@ -278,9 +274,7 @@
   "Beta-lactam (nhóm)": [
    "beta lactam",
    "beta-lactam",
-   "nhóm beta lactam",
-   "amoxicillin",
-   "ampicillin"
+   "nhóm beta lactam"
   ],
   "Aminoglycoside (nhóm)": [
    "aminoglycoside",
@@ -304,10 +298,7 @@
   ],
   "Avermectin (nhóm)": [
    "avermectin",
-   "nhóm avermectin",
-   "abamectin",
-   "emamectin",
-   "ivermectin"
+   "nhóm avermectin"
   ],
   "Ionophores (nhóm)": [
    "ionophores",
@@ -373,9 +364,7 @@
   ],
   "Trichlorfon (Dipterex)": [
    "trichlorfon",
-   "dipterex",
-   "dichlorvos",
-   "dichlovos"
+   "dipterex"
   ],
   "2,4-D": [
    "2,4-d",
@@ -743,7 +732,6 @@
   "Độc tố DSP (Lipophilic)": [
    "dsp",
    "lipophilic toxins",
-   "okadaic acid",
    "độc tố gây tiêu chảy"
   ],
   "COD": [
@@ -769,6 +757,44 @@
    "magiê",
    "mg",
    "magie (mg)"
+  ],
+  "Amoxicillin": [
+   "amoxicillin",
+   "amoxicilin",
+   "amoxycillin"
+  ],
+  "Ampicillin": [
+   "ampicillin",
+   "ampicilin"
+  ],
+  "Oxytetracycline": [
+   "oxytetracycline"
+  ],
+  "Chlortetracycline": [
+   "chlortetracycline"
+  ],
+  "Doxycycline": [
+   "doxycycline"
+  ],
+  "Abamectin": [
+   "abamectin"
+  ],
+  "Emamectin": [
+   "emamectin"
+  ],
+  "Ivermectin": [
+   "ivermectin"
+  ],
+  "Dichlorvos": [
+   "dichlorvos",
+   "dichlovos"
+  ],
+  "Okadaic acid": [
+   "okadaic acid"
+  ],
+  "Borate": [
+   "borate",
+   "borax"
   ]
  },
  "sinh_them": {
