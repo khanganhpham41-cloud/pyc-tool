@@ -1,0 +1,9 @@
+HANG_CHO/
+HOA_HOC/
+VI_SINH/
+DU_LIEU_NHAP/
+*.xlsx
+NHAT_KY_TU_DONG.txt
+PYC_TOOL.zip
+scripts/_*
+__pycache__/

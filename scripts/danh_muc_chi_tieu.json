@@ -1,0 +1,862 @@
+{
+ "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!).",
+ "hoa": {
+  "Aflatoxin B1": [
+   "aflatoxin b1",
+   "afb1"
+  ],
+  "Aflatoxin tổng": [
+   "aflatoxin tổng",
+   "tổng aflatoxin",
+   "aflatoxin tổng số",
+   "aflatoxin (b1, b2, g1, g2)",
+   "aflatoxin b1 b2 g1 g2",
+   "aflatoxin tổng (b1, b2, g1, g2)"
+  ],
+  "Ochratoxin A": [
+   "ochratoxin a",
+   "ochratoxin",
+   "ota"
+  ],
+  "Độc tố nấm (đa nhóm)": [
+   "độc tố nấm",
+   "đa độc tố nấm",
+   "mycotoxin",
+   "độc tố nấm mốc",
+   "độc tố vi nấm"
+  ],
+  "Acid benzoic (Benzoat)": [
+   "acid benzoic",
+   "axit benzoic",
+   "benzoic acid",
+   "benzoat",
+   "benzoate",
+   "natri benzoat",
+   "natri benzoate",
+   "sodium benzoate",
+   "sodium benzoat"
+  ],
+  "Acid sorbic (Sorbat)": [
+   "acid sorbic",
+   "axit sorbic",
+   "sorbic acid",
+   "sorbat",
+   "sorbate",
+   "kali sorbat",
+   "kali sorbate",
+   "potassium sorbate"
+  ],
+  "Caffein": [
+   "caffein",
+   "cafein",
+   "caffeine",
+   "cafeine"
+  ],
+  "Hàn the (Borat)": [
+   "hàn the",
+   "borat",
+   "borate",
+   "acid boric",
+   "axit boric",
+   "boric acid",
+   "boric axit",
+   "muối borat",
+   "boric axit và muối borate"
+  ],
+  "Formaldehyde": [
+   "formaldehyde",
+   "formaldehyt",
+   "formol",
+   "formalin",
+   "fomaldehyt"
+  ],
+  "Sulfit": [
+   "sulfit",
+   "sulfite",
+   "sulphite",
+   "sunfit",
+   "so2"
+  ],
+  "Nitrat": [
+   "nitrat",
+   "nitrate",
+   "no3"
+  ],
+  "Nitrit": [
+   "nitrit",
+   "nitrite",
+   "no2"
+  ],
+  "Histamine": [
+   "histamine",
+   "histamin"
+  ],
+  "TVB-N": [
+   "tvb-n",
+   "tvbn",
+   "tvb n",
+   "tổng nitơ bazơ dễ bay hơi",
+   "nitơ bazơ bay hơi"
+  ],
+  "Rhodamine B": [
+   "rhodamine b",
+   "rhodamin b"
+  ],
+  "Vàng O": [
+   "vàng o",
+   "auramine o",
+   "auramin o"
+  ],
+  "Sudan (I, II, III, IV)": [
+   "sudan",
+   "sudans",
+   "sudan i",
+   "sudan i iv"
+  ],
+  "Cyclamate": [
+   "cyclamate",
+   "cyclamat",
+   "cyclamic acid",
+   "natri cyclamat"
+  ],
+  "Saccharin": [
+   "saccharin",
+   "sacarin",
+   "sacarine"
+  ],
+  "Aspartame": [
+   "aspartame",
+   "aspartam"
+  ],
+  "Acesulfame K": [
+   "acesulfame k",
+   "acesulfame-k",
+   "acesulfam k",
+   "acesulfame kali"
+  ],
+  "Vitamin C": [
+   "vitamin c",
+   "acid ascorbic",
+   "axit ascorbic",
+   "ascorbic acid",
+   "ascorbat",
+   "natri ascorbat"
+  ],
+  "Polyphosphate": [
+   "polyphosphate",
+   "polyphosphat",
+   "phosphate thực phẩm",
+   "tripolyphosphate",
+   "stpp",
+   "natri tripolyphosphat"
+  ],
+  "Citrate": [
+   "citrate",
+   "citrat",
+   "acid citric",
+   "axit citric"
+  ],
+  "BHA, BHT, TBHQ": [
+   "bha",
+   "bht",
+   "tbhq",
+   "chất chống oxy hóa bha bht tbhq"
+  ],
+  "EDTA": [
+   "edta"
+  ],
+  "Tinopal": [
+   "tinopal"
+  ],
+  "Melamine": [
+   "melamine",
+   "melamin"
+  ],
+  "Cysteamine": [
+   "cysteamine",
+   "cysteamin"
+  ],
+  "Ethoxyquin": [
+   "ethoxyquin",
+   "ethoxyquine"
+  ],
+  "Chloramphenicol": [
+   "chloramphenicol",
+   "cap",
+   "cloramphenicol"
+  ],
+  "Nitrofuran (AOZ, AMOZ, AHD, SEM)": [
+   "nitrofuran",
+   "nitrofurans",
+   "nhóm nitrofuran",
+   "chất chuyển hóa nitrofuran"
+  ],
+  "AOZ": [
+   "aoz",
+   "furazolidone",
+   "furazolidon"
+  ],
+  "AMOZ": [
+   "amoz",
+   "furaltadone"
+  ],
+  "AHD": [
+   "ahd",
+   "nitrofurantoin"
+  ],
+  "SEM": [
+   "sem",
+   "nitrofurazone"
+  ],
+  "Malachite Green & LMG": [
+   "malachite green",
+   "lmg",
+   "leuco malachite green",
+   "malachite green và leuco malachite green",
+   "mg lmg",
+   "xanh malachite"
+  ],
+  "Crystal Violet & LCV": [
+   "crystal violet",
+   "cv",
+   "lcv",
+   "leuco crystal violet",
+   "gentian violet",
+   "crystal violet và leuco crystal violet"
+  ],
+  "Brilliant Green": [
+   "brilliant green",
+   "briliant green"
+  ],
+  "Enrofloxacin": [
+   "enrofloxacin",
+   "enro"
+  ],
+  "Ciprofloxacin": [
+   "ciprofloxacin",
+   "cipro"
+  ],
+  "Enrofloxacin & Ciprofloxacin": [
+   "enrofloxacin và ciprofloxacin",
+   "enrofloxacin & ciprofloxacin",
+   "enro cipro"
+  ],
+  "Fluoroquinolone": [
+   "fluoroquinolone",
+   "fluoroquinolones",
+   "quinolone",
+   "nhóm quinolone",
+   "nhóm fluoroquinolone"
+  ],
+  "Tetracycline (nhóm)": [
+   "tetracycline",
+   "tetracyclines",
+   "nhóm tetracycline",
+   "oxytetracycline",
+   "chlortetracycline",
+   "doxycycline"
+  ],
+  "Sulfonamide (nhóm)": [
+   "sulfonamide",
+   "sulfonamides",
+   "nhóm sulfonamide",
+   "sulfa"
+  ],
+  "Nitroimidazole (nhóm)": [
+   "nitroimidazole",
+   "nitroimidazoles",
+   "nhóm nitroimidazole"
+  ],
+  "Metronidazole": [
+   "metronidazole",
+   "metronidazol"
+  ],
+  "Macrolide (nhóm)": [
+   "macrolide",
+   "nhóm macrolide"
+  ],
+  "Beta-lactam (nhóm)": [
+   "beta lactam",
+   "beta-lactam",
+   "nhóm beta lactam",
+   "amoxicillin",
+   "ampicillin"
+  ],
+  "Aminoglycoside (nhóm)": [
+   "aminoglycoside",
+   "nhóm aminoglycoside"
+  ],
+  "Beta-agonist (nhóm)": [
+   "beta agonist",
+   "beta-agonist",
+   "beta agonists",
+   "nhóm beta agonist"
+  ],
+  "Clenbuterol": [
+   "clenbuterol"
+  ],
+  "Salbutamol": [
+   "salbutamol"
+  ],
+  "Ractopamine": [
+   "ractopamine",
+   "ractopamin"
+  ],
+  "Avermectin (nhóm)": [
+   "avermectin",
+   "nhóm avermectin",
+   "abamectin",
+   "emamectin",
+   "ivermectin"
+  ],
+  "Ionophores (nhóm)": [
+   "ionophores",
+   "ionophore",
+   "nhóm ionophores"
+  ],
+  "Dexamethasone": [
+   "dexamethasone",
+   "dexamethason"
+  ],
+  "Methyltestosterone": [
+   "methyltestosterone",
+   "methyl testosterone",
+   "mt"
+  ],
+  "Diethylstilbestrol (DES)": [
+   "diethylstilbestrol",
+   "diethylstibestrol",
+   "des"
+  ],
+  "Trifluralin": [
+   "trifluralin",
+   "trifluraline"
+  ],
+  "Đa dư lượng thuốc thú y": [
+   "đa dư lượng thuốc thú y",
+   "thuốc thú y",
+   "đa kháng sinh"
+  ],
+  "Carbendazim": [
+   "carbendazim"
+  ],
+  "Imidacloprid": [
+   "imidacloprid"
+  ],
+  "Acephate": [
+   "acephate",
+   "acephat"
+  ],
+  "Methamidophos": [
+   "methamidophos"
+  ],
+  "Methyl Parathion": [
+   "methyl parathion",
+   "parathion methyl",
+   "parathion-methyl"
+  ],
+  "Glyphosate": [
+   "glyphosate",
+   "glyphosat"
+  ],
+  "Paraquat & Diquat": [
+   "paraquat",
+   "diquat",
+   "paraquat và diquat"
+  ],
+  "Fipronil": [
+   "fipronil"
+  ],
+  "Chlorpyrifos": [
+   "chlorpyrifos",
+   "chlorpyriphos"
+  ],
+  "Trichlorfon (Dipterex)": [
+   "trichlorfon",
+   "dipterex",
+   "dichlorvos",
+   "dichlovos"
+  ],
+  "2,4-D": [
+   "2,4-d",
+   "2,4 d",
+   "24d",
+   "2 4 d"
+  ],
+  "BVTV Lân hữu cơ": [
+   "bvtv lân hữu cơ",
+   "lân hữu cơ",
+   "dư lượng thuốc bảo vệ thực vật nhóm lân hữu cơ",
+   "organophosphate"
+  ],
+  "BVTV Clo hữu cơ": [
+   "bvtv clo hữu cơ",
+   "clo hữu cơ",
+   "chlor hữu cơ",
+   "dư lượng thuốc bảo vệ thực vật nhóm clo hữu cơ",
+   "organochlorine"
+  ],
+  "BVTV Cúc tổng hợp": [
+   "bvtv cúc tổng hợp",
+   "cúc tổng hợp",
+   "nhóm cúc",
+   "pyrethroid",
+   "dư lượng thuốc bảo vệ thực vật nhóm cúc tổng hợp"
+  ],
+  "BVTV Carbamate": [
+   "bvtv carbamate",
+   "carbamate",
+   "nhóm carbamate",
+   "nhóm dư lượng thuốc bảo vệ thực vật carbamate"
+  ],
+  "Dithiocarbamate": [
+   "dithiocarbamate",
+   "dithiocarbamates",
+   "mancozeb",
+   "cs2"
+  ],
+  "Đa dư lượng thuốc BVTV": [
+   "thuốc bảo vệ thực vật",
+   "đa dư lượng thuốc bvtv",
+   "dư lượng thuốc bvtv",
+   "bvtv"
+  ],
+  "Ethylene oxide & 2-Chloroethanol": [
+   "ethylene oxide",
+   "eto",
+   "2-chloroethanol",
+   "ethylene oxide và 2-chloroethanol"
+  ],
+  "Chlorate & Perchlorate": [
+   "chlorate",
+   "perchlorate",
+   "chlorat",
+   "perchlorat",
+   "chlorate và perchlorate"
+  ],
+  "Benzalkonium chloride (BAC)": [
+   "benzalkonium chloride",
+   "bac",
+   "benzalkonium"
+  ],
+  "Dioxin": [
+   "dioxin",
+   "dioxins"
+  ],
+  "Dioxin-like PCBs": [
+   "dioxin-like pcbs",
+   "dl-pcbs",
+   "dl pcb"
+  ],
+  "PCBs tổng": [
+   "pcbs",
+   "pcb",
+   "pcbs tổng",
+   "ndl-pcbs"
+  ],
+  "PAHs": [
+   "pahs",
+   "pah",
+   "benzo(a)pyrene",
+   "benzo a pyrene",
+   "polycyclic aromatic hydrocarbons"
+  ],
+  "Chì (Pb)": [
+   "chì",
+   "pb",
+   "chì (pb)"
+  ],
+  "Cadimi (Cd)": [
+   "cadimi",
+   "cadmi",
+   "cadmium",
+   "cd",
+   "cadimi (cd)"
+  ],
+  "Thủy ngân (Hg)": [
+   "thủy ngân",
+   "hg",
+   "thủy ngân (hg)",
+   "mercury"
+  ],
+  "Methyl thủy ngân": [
+   "methyl thủy ngân",
+   "methyl mercury",
+   "methylmercury",
+   "metyl thủy ngân"
+  ],
+  "Asen (As)": [
+   "asen",
+   "as",
+   "arsen",
+   "arsenic",
+   "thạch tín",
+   "asen (as)"
+  ],
+  "Thiếc (Sn)": [
+   "thiếc",
+   "sn",
+   "thiếc (sn)"
+  ],
+  "Đồng (Cu)": [
+   "đồng",
+   "cu",
+   "đồng (cu)"
+  ],
+  "Kẽm (Zn)": [
+   "kẽm",
+   "zn",
+   "kẽm (zn)"
+  ],
+  "Sắt (Fe)": [
+   "sắt",
+   "fe",
+   "sắt (fe)"
+  ],
+  "Canxi (Ca)": [
+   "canxi",
+   "calci",
+   "ca",
+   "canxi (ca)"
+  ],
+  "Natri (Na)": [
+   "natri",
+   "na",
+   "natri (na)"
+  ],
+  "Kali (K)": [
+   "kali",
+   "k",
+   "kali (k)"
+  ],
+  "Nitơ tổng": [
+   "nitơ tổng",
+   "nitơ tổng số",
+   "nitrogen tổng",
+   "nitrogen tổng số",
+   "đạm tổng",
+   "độ đạm",
+   "đạm toàn phần",
+   "nitơ toàn phần",
+   "hàm lượng nitơ"
+  ],
+  "Nitơ acid amin": [
+   "nitơ acid amin",
+   "nitơ axit amin",
+   "nitơ amin",
+   "đạm amin",
+   "nitơ – acid amin",
+   "%nitơ acid amin/tổng",
+   "nitơ acid amin/nitơ tổng"
+  ],
+  "Nitơ amoniac": [
+   "nitơ amoniac",
+   "nitơ amoniăc",
+   "đạm amoniac",
+   "nitrogen amoniac",
+   "%nitơ amoniac/tổng",
+   "nitơ amoniac/nitơ tổng"
+  ],
+  "Protein": [
+   "protein",
+   "đạm (protein)",
+   "hàm lượng protein",
+   "nitơ tổng/protein"
+  ],
+  "Béo tổng": [
+   "béo tổng",
+   "béo",
+   "chất béo",
+   "lipid",
+   "hàm lượng béo",
+   "fat"
+  ],
+  "Độ ẩm": [
+   "độ ẩm",
+   "ẩm",
+   "ẩm độ",
+   "hàm lượng nước",
+   "độ ẩm (hàm lượng nước)",
+   "moisture"
+  ],
+  "Tro tổng": [
+   "tro tổng",
+   "tro",
+   "hàm lượng tro",
+   "tro toàn phần"
+  ],
+  "Tro không tan trong HCl": [
+   "tro không tan trong hcl",
+   "tro không tan trong axit clohydric",
+   "tro không tan trong acid",
+   "tro không tan"
+  ],
+  "Xơ thô": [
+   "xơ thô",
+   "xơ",
+   "chất xơ",
+   "fiber"
+  ],
+  "Muối NaCl": [
+   "muối nacl",
+   "muối",
+   "nacl",
+   "clorua",
+   "muối ăn",
+   "natri clorua",
+   "muối (nacl)",
+   "muối nacl/clorua"
+  ],
+  "pH": [
+   "ph",
+   "độ ph"
+  ],
+  "Độ axit": [
+   "độ axit",
+   "độ acid",
+   "axit",
+   "acid",
+   "hàm lượng axit",
+   "axit tổng",
+   "độ chua"
+  ],
+  "Carbohydrate": [
+   "carbohydrate",
+   "carbohydrat",
+   "glucid",
+   "gluxit"
+  ],
+  "Năng lượng": [
+   "năng lượng",
+   "energy",
+   "calo"
+  ],
+  "Đường tổng": [
+   "đường tổng",
+   "đường tổng số",
+   "tổng đường",
+   "đường"
+  ],
+  "Cholesterol": [
+   "cholesterol"
+  ],
+  "Chỉ số peroxit": [
+   "chỉ số peroxit",
+   "chỉ số peroxide",
+   "peroxit",
+   "pv"
+  ],
+  "Chỉ số acid": [
+   "chỉ số acid",
+   "chỉ số axit",
+   "trị số axit",
+   "av"
+  ],
+  "Chỉ số xà phòng hóa": [
+   "chỉ số xà phòng hóa",
+   "chỉ số xà phòng"
+  ],
+  "HMF": [
+   "hmf",
+   "hydroxymethylfurfural",
+   "5-hydroxymethylfurfural",
+   "5-hmf"
+  ],
+  "Hoạt lực Diastase": [
+   "diastase",
+   "diastaza",
+   "hoạt lực diastase",
+   "hoạt lực diastaza"
+  ],
+  "Độ dẫn điện": [
+   "độ dẫn điện",
+   "ec"
+  ],
+  "Chất rắn không tan": [
+   "chất rắn không tan",
+   "chất rắn không tan trong nước"
+  ],
+  "Phospho tổng": [
+   "phospho tổng",
+   "photpho tổng",
+   "phosphate tổng",
+   "phosphat tổng"
+  ],
+  "Acid amin": [
+   "acid amin",
+   "axit amin",
+   "amino acid",
+   "thành phần acid amin"
+  ],
+  "Methanol": [
+   "methanol",
+   "metanol"
+  ],
+  "Ethanol": [
+   "ethanol",
+   "etanol",
+   "độ cồn"
+  ],
+  "Cyanua": [
+   "cyanua",
+   "xyanua",
+   "cyanide",
+   "hcn"
+  ],
+  "Phenol": [
+   "phenol"
+  ],
+  "Bisphenol A": [
+   "bisphenol a",
+   "bpa",
+   "bis phenol a"
+  ],
+  "Thôi nhiễm kim loại nặng": [
+   "thôi nhiễm kim loại",
+   "kim loại nặng thôi nhiễm"
+  ],
+  "KMnO4 tiêu tốn": [
+   "kmno4 tiêu tốn",
+   "lượng kmno4 tiêu tốn",
+   "kali permanganat tiêu tốn"
+  ],
+  "Cặn khô": [
+   "cặn khô",
+   "cặn bay hơi"
+  ],
+  "Hydro sunfua": [
+   "hydro sunfua",
+   "h2s",
+   "hydro sulfua"
+  ],
+  "Độc tố PSP": [
+   "psp",
+   "độc tố gây liệt cơ",
+   "saxitoxin"
+  ],
+  "Độc tố ASP": [
+   "asp",
+   "độc tố gây mất trí nhớ",
+   "domoic acid",
+   "acid domoic"
+  ],
+  "Độc tố DSP (Lipophilic)": [
+   "dsp",
+   "lipophilic toxins",
+   "okadaic acid",
+   "độc tố gây tiêu chảy"
+  ],
+  "COD": [
+   "cod",
+   "nhu cầu oxy hóa học"
+  ],
+  "BOD5": [
+   "bod",
+   "bod5",
+   "nhu cầu oxy sinh hóa"
+  ],
+  "Độ cứng": [
+   "độ cứng"
+  ],
+  "Độ đục": [
+   "độ đục"
+  ],
+  "Độ màu": [
+   "độ màu"
+  ],
+  "Magie (Mg)": [
+   "magie",
+   "magiê",
+   "mg",
+   "magie (mg)"
+  ]
+ },
+ "sinh_them": {
+  "Enterococci": [
+   "enterococci",
+   "enterococcus",
+   "faecal streptococci",
+   "streptococci feacal",
+   "liên cầu phân",
+   "enterococcus (faecal streptococcus)"
+  ],
+  "Coliform chịu nhiệt": [
+   "coliform chịu nhiệt",
+   "coliforms chịu nhiệt",
+   "coliform phân",
+   "fecal coliform",
+   "fecal coliforms",
+   "faecal coliforms"
+  ],
+  "Pseudomonas aeruginosa": [
+   "pseudomonas aeruginosa",
+   "p. aeruginosa",
+   "p.aeruginosa"
+  ],
+  "Bacillus cereus": [
+   "bacillus cereus",
+   "b. cereus",
+   "b.cereus"
+  ],
+  "Shigella spp.": [
+   "shigella",
+   "shigella spp",
+   "shigella spp."
+  ],
+  "Vibrio spp.": [
+   "vibrio spp",
+   "vibrio spp.",
+   "vibrio"
+  ],
+  "V.vulnificus": [
+   "v.vulnificus",
+   "v. vulnificus",
+   "vibrio vulnificus"
+  ],
+  "Clostridia khử sulfit": [
+   "clostridia khử sulfit",
+   "clostridia khử sulfite",
+   "bào tử vi khuẩn kỵ khí khử sulfit",
+   "vi khuẩn kỵ khí khử sulfite",
+   "sulfite reducing clostridia",
+   "src"
+  ],
+  "Campylobacter spp.": [
+   "campylobacter",
+   "campylobacter spp",
+   "campylobacter spp."
+  ],
+  "Cronobacter spp.": [
+   "cronobacter",
+   "cronobacter spp",
+   "cronobacter sakazakii"
+  ],
+  "Aeromonas spp.": [
+   "aeromonas",
+   "aeromonas spp",
+   "aeromonas spp."
+  ],
+  "E.coli O157": [
+   "e.coli o157",
+   "e. coli o157",
+   "o157",
+   "e.coli o157:h7"
+  ],
+  "Listeria spp.": [
+   "listeria spp",
+   "listeria spp."
+  ],
+  "Clostridium botulinum": [
+   "clostridium botulinum",
+   "c. botulinum",
+   "c.botulinum",
+   "botulinum"
+  ],
+  "Norovirus & HAV": [
+   "norovirus",
+   "hepatitis a",
+   "hav",
+   "viêm gan a"
+  ]
+ }
+}

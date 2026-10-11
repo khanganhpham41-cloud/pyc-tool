@@ -1,0 +1,30 @@
+CONG CU TAO PHIEU YEU CAU PHAN TICH (02.11-ST/5, 02.11-ST/6)
+
+LAN DAU (chi 1 lan): bam dup CAI_DAT.bat, roi bam dup CAI_TU_DONG.bat
+ -> tu nay KHONG can bam TAO_PHIEU.bat: co file .json trong HANG_CHO la phieu tu tao (~30 giay),
+    co thong bao goc man hinh; chi tiet + canh bao (!) ghi o NHAT_KY_TU_DONG.txt.
+ Tat che do tu dong: TAT_TU_DONG.bat. TAO_PHIEU.bat van dung duoc khi can chay tay.
+
+MOI LAN LAM PHIEU:
+ 1. Gui thong tin mau cho Claude (Project AIRO-TTV6 phieu YCPT) -> Claude tao file .json va bo vao:
+      - D:\01_CONG_VIEC_TTV6\PYC_PT\HANG_CHO   (khi laptop dang noi voi Claude), hoac
+      - Google Drive: My Drive\PYC_PT\HANG_CHO  (khi dung dien thoai - laptop tu dong bo ve)
+ 2. Phieu tu tao (che do tu dong) - hoac bam dup TAO_PHIEU.bat neu chua cai tu dong.
+ 3. Doc cac dong canh bao (!) trong NHAT_KY_TU_DONG.txt:
+      - ma Laabb trung / sai dang / mau co ca Hoa+Sinh ma thieu ma rieng
+      - chi tieu chua co trong danh muc QD 1586
+
+QUY TAC MA (02.11-ST): mau vua Hoa vua Sinh -> 2 ma Laabb KHAC nhau
+ (json: "ma_hh" cho phieu Hoa, "ma_vs" cho phieu Sinh; mau chi 1 loai dung "ma").
+
+TEN CHI TIEU: tu chuan hoa theo scripts\danh_muc_chi_tieu.json (GCN 1586/TDC-HCHQ).
+ Them ten moi: mo file nay bang Notepad, them vao dung nhom "hoa" / "sinh_them".
+
+KET QUA:
+ HOA_HOC\<nam>\<nam-thang>\<SoHH>_<KhachHang>.docx
+ VI_SINH\<nam>\<nam-thang>\<SoVS>_<KhachHang>.docx
+ DU_LIEU_NHAP\<nam>\<nam-thang>\...json   du lieu goc (sua json -> bo lai HANG_CHO de tao lai)
+ SO_THEO_DOI_PYC.xlsx                       so theo doi phieu / ma mau
+
+PYC_TOOL.zip tu dong cap nhat sau moi lan chay va chep len Google Drive\PYC_PT
+ -> laptop tat, Claude lay zip tu Drive de xuat .docx tren dien thoai.
