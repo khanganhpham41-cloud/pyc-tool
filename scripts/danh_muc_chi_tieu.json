@@ -30,11 +30,7 @@
    "axit benzoic",
    "benzoic acid",
    "benzoat",
-   "benzoate",
-   "natri benzoat",
-   "natri benzoate",
-   "sodium benzoate",
-   "sodium benzoat"
+   "benzoate"
   ],
   "Acid sorbic (Sorbat)": [
    "acid sorbic",
@@ -800,6 +796,12 @@
   ],
   "Sudan I": [
    "sudan i"
+  ],
+  "Natri benzoat": [
+   "natri benzoat",
+   "natri benzoate",
+   "sodium benzoate",
+   "sodium benzoat"
   ]
  },
  "sinh_them": {
