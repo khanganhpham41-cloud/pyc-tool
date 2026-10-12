@@ -14,7 +14,8 @@ MOI LAN LAM PHIEU:
       - ma Laabb trung / sai dang / mau co ca Hoa+Sinh ma thieu ma rieng
       - chi tieu chua co trong danh muc QD 1586
 
-QUY TAC MA (02.11-ST): mau vua Hoa vua Sinh -> 2 ma Laabb KHAC nhau
+QUY TAC MA (02.11-ST): ma Hoa va ma Sinh chay DOC LAP theo tung phong kiem nghiem
+ -> mau vua Hoa vua Sinh co 2 ma rieng; trung so giua Hoa va Sinh la binh thuong
  (json: "ma_hh" cho phieu Hoa, "ma_vs" cho phieu Sinh; mau chi 1 loai dung "ma").
 
 TEN CHI TIEU: tu chuan hoa theo scripts\danh_muc_chi_tieu.json (GCN 1586/TDC-HCHQ).

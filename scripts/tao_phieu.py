@@ -312,7 +312,8 @@ CODE_RE = re.compile(r"^L\d{3,5}$")
 
 
 def check_codes(hoa, sinh):
-    """Mã Laabb: đúng dạng, không trùng trong phiếu, không trùng giữa Hóa/Sinh, không trùng sổ (cùng tháng)."""
+    """Mã Laabb: đúng dạng, không trùng trong cùng loại phiếu, không trùng sổ (cùng loại, cùng tháng).
+    Mã Hóa và mã Sinh chạy ĐỘC LẬP theo từng phòng kiểm nghiệm — trùng số giữa Hóa và Sinh là bình thường."""
     out, seen = [], {}
     for loai, lst in (("Hóa", hoa), ("Sinh", sinh)):
         for x in lst:
@@ -321,15 +322,16 @@ def check_codes(hoa, sinh):
                 continue
             if not CODE_RE.match(c):
                 out.append(f"Mã '{c}' ({x['mota']}) sai dạng Laabb")
-            if c in seen:
-                out.append(f"Mã {c} dùng 2 lần ({seen[c]} và {loai}: {x['mota']})")
-            seen[c] = f"{loai}: {x['mota']}"
+            if (loai, c) in seen:
+                out.append(f"Mã {loai} {c} dùng 2 lần ({seen[(loai, c)]} và {x['mota']})")
+            seen[(loai, c)] = x["mota"]
     try:
         thang = datetime.datetime.now().strftime("/%m/%Y")
+        ten = {"Hóa học": "Hóa", "Vi sinh": "Sinh"}
         wb = openpyxl.load_workbook(LOG_FILE, read_only=True)
         for r in wb["MAU"].iter_rows(min_row=2, values_only=True):
-            if r and r[3] in seen and str(r[0]).endswith(thang):
-                out.append(f"Mã {r[3]} đã có trong sổ theo dõi (phiếu {r[2]}, {r[0]}) — kiểm tra trùng")
+            if r and (ten.get(r[1], r[1]), r[3]) in seen and str(r[0]).endswith(thang):
+                out.append(f"Mã {ten.get(r[1], r[1])} {r[3]} đã có trong sổ theo dõi (phiếu {r[2]}, {r[0]}) — kiểm tra trùng")
     except Exception:
         pass
     return out
@@ -362,8 +364,6 @@ def process(info, samples, src_desc, src_path=None):
                 code_warn.append(f"Mẫu '{s['mota']}' có cả Hóa và Sinh nhưng chỉ có 1 mã ({ma}) — "
                                  f"đã đặt cho phiếu Hóa, mã Sinh để trống (2 phiếu phải là 2 mã khác nhau)")
             ma_hh = ma_hh or ma
-            if ma_hh and ma_vs and ma_hh == ma_vs:
-                code_warn.append(f"Mẫu '{s['mota']}': mã Hóa và mã Sinh trùng nhau ({ma_hh}) — phải là 2 số khác nhau")
         else:
             ma_hh = ma_hh or ma
             ma_vs = ma_vs or ma

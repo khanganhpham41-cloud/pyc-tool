@@ -16,7 +16,7 @@ from docx import Document
 from docx.oxml.ns import qn
 from docx.shared import Pt
 
-from pyc_common import fill_after_label, SINH_NAMES, sinh_canonical
+from pyc_common import fill_after_label, SINH_NAMES, sinh_canonical, classify
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -214,6 +214,52 @@ def _distribute(names, n_slots=13):
     return sizes
 
 
+HEADER_SIZE = 16        # 8pt — cỡ chữ chung cho mọi tên chỉ tiêu Hóa
+HEADER_MARGIN = 20      # lề trái/phải ô tên chỉ tiêu (twips) để tên dài xuống được 2 dòng
+
+
+def _set_header_uniform(cell, text):
+    tc = cell._tc
+    for p in list(tc.findall(qn("w:p")))[1:]:
+        tc.remove(p)
+    p = cell.paragraphs[0]
+    for r in list(p.runs):
+        r._element.getparent().remove(r._element)
+    ppr = p._p.get_or_add_pPr()
+    old = ppr.find(qn("w:rPr"))
+    if old is not None:
+        ppr.remove(old)
+    p.alignment = 1
+    run = p.add_run(text)
+    f = run.font
+    f.name = "Times New Roman"
+    f.size = Pt(HEADER_SIZE / 2)
+    f.bold = False
+    f.italic = False
+    rpr = run._element.get_or_add_rPr()
+    rf = rpr.find(qn("w:rFonts"))
+    for a in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+        rf.set(qn(a), "Times New Roman")
+    tcPr = tc.get_or_add_tcPr()
+    mar = tcPr.find(qn("w:tcMar"))
+    if mar is None:
+        mar = tcPr.makeelement(qn("w:tcMar"), {})
+        # tcMar phải đứng trước textDirection/vAlign theo thứ tự schema
+        anchor = next((e for e in (tcPr.find(qn(t)) for t in
+                       ("w:textDirection", "w:tcFitText", "w:vAlign", "w:hideMark")) if e is not None), None)
+        if anchor is not None:
+            anchor.addprevious(mar)
+        else:
+            tcPr.append(mar)
+    for side in ("w:left", "w:right", "w:start", "w:end"):
+        e = mar.find(qn(side))
+        if e is None:
+            e = mar.makeelement(qn(side), {})
+            mar.append(e)
+        e.set(qn("w:w"), str(HEADER_MARGIN))
+        e.set(qn("w:type"), "dxa")
+
+
 def build_hoa_page(out_path, info, mau_list, warnings):
     cols = []
     for m in mau_list:
@@ -231,19 +277,21 @@ def build_hoa_page(out_path, info, mau_list, warnings):
     widen_cols(t, {0: 160, 3: 220})  # cột KL đủ chỗ cho 4 chữ số (vd 1000)
     fill_header(doc, r"Số HH", info, warnings)
 
-    sizes = _distribute(cols)
+    # Định dạng thống nhất: 13 cột chỉ tiêu rộng bằng nhau (không gộp cột), cùng font/cỡ chữ,
+    # không đậm/nghiêng (ô mẫu gốc mỗi ô một kiểu chữ khác nhau). Tên dài tự xuống dòng trong ô.
+    ntp = set()
+    raw = info.get("ntp") or ""          # "H2O2; Formaldehyde" — chỉ tiêu gửi nhà thầu phụ
+    for x in (raw if isinstance(raw, list) else re.split(r"[;,]", str(raw))):
+        if str(x).strip():
+            ntp.add(ABBREV.get(classify(x)[1], classify(x)[1]))
     set_row_height(t.rows[1], SAFE_ROW_H)
-    starts, col = [], 4
-    for sz in sizes:
-        starts.append((col, sz))
-        col += sz
-    for (start, sz), name in zip(starts, cols):
-        need = len(name) / sz * TWIPS_PER_CHAR
-        fs = BASE_SIZE if need <= SAFE_ROW_H else max(MIN_SIZE, round(BASE_SIZE * SAFE_ROW_H / need))
-        cell = merge_group(t, 1, start, sz)
-        set_cell_text(cell, name, center=True, size_half_pt=fs)
-        merge_group(t, 3, start, sz)
-
+    starts = [(4 + j, 1) for j in range(len(cols))]
+    for j in range(MAX_HOA_CT):
+        cell = t.rows[1].cells[4 + j]
+        name = cols[j] if j < len(cols) else ""
+        if name in ntp:
+            name += " (NTP)"
+        _set_header_uniform(cell, name)
     rows = list(t.rows[4:11])
     for i, (row, m) in enumerate(zip(rows, mau_list)):
         set_cell_text(row.cells[0], str(m["stt"]), center=True)

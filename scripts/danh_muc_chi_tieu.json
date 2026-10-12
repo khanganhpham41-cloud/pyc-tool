@@ -109,7 +109,6 @@
   "Sudan (I, II, III, IV)": [
    "sudan",
    "sudans",
-   "sudan i",
    "sudan i iv"
   ],
   "Cyclamate": [
@@ -248,7 +247,6 @@
    "nhóm fluoroquinolone"
   ],
   "Tetracycline (nhóm)": [
-   "tetracycline",
    "tetracyclines",
    "nhóm tetracycline"
   ],
@@ -795,6 +793,13 @@
   "Borate": [
    "borate",
    "borax"
+  ],
+  "Tetracycline": [
+   "tetracycline",
+   "tetracyline"
+  ],
+  "Sudan I": [
+   "sudan i"
   ]
  },
  "sinh_them": {
