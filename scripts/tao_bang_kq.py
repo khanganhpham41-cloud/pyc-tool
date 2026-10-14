@@ -146,5 +146,8 @@ def build(info, mau_raw, root, out_name=None):
     os.makedirs(sub, exist_ok=True)
     name = out_name or cfg.get("ten_file") or ("KQ_" + (info.get("ten_file") or "LO") + now.strftime("_%d%m%y"))
     out = os.path.join(sub, name if name.lower().endswith(".xlsx") else name + ".xlsx")
-    wb.save(out)   # cùng tên -> ghi đè (bản đúng thay bản sai)
+    try:
+        wb.save(out)   # cùng tên -> ghi đè (bản đúng thay bản sai)
+    except PermissionError:
+        raise RuntimeError(f"{os.path.basename(out)} đang mở trong Excel — đóng file rồi gửi lại JSON")
     return out, len(rows), len(cols_ct)

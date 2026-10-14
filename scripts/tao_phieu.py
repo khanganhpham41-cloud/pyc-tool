@@ -372,6 +372,10 @@ def run_json(path):
     if len(groups) <= 1:
         code, c = process(info, samples, name, path)
         return max(rc, code), created + c
+    khac = info.get("so_hh" if loai_s else "so_vs")
+    if khac:
+        print(f"   !  {name}: lô tách theo so_phieu nhưng có chung số {khac} cho loại phiếu còn lại — "
+              f"các phiếu đó sẽ trùng số, kiểm tra lại (nên tách JSON Hóa/Sinh riêng)")
     first = True
     for so, lst in groups.items():
         sub = dict(info)

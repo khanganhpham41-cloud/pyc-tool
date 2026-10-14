@@ -1,6 +1,8 @@
 param([string]$ListFile)
 # Moi dong: <duong dan .docx>|<so trang dung>  (so trang phieu + 1 trang Thoa thuan)
 $lines = Get-Content -LiteralPath $ListFile -Encoding UTF8 | Where-Object { $_.Trim() -ne "" }
+# Chi xu ly file Word (.docx); bang Excel KQ (.xlsx) khong mo bang Word
+$lines = @($lines | Where-Object { $_.Split('|')[0] -match '\.docx$' })
 if (-not $lines) { exit 0 }
 try { $word = New-Object -ComObject Word.Application } catch {
   Write-Host "Khong mo duoc Word tu dong - hay mo tung file bang Word de kiem tra truoc khi gui." ; exit 0 }
