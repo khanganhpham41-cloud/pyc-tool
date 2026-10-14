@@ -15,6 +15,7 @@ import openpyxl
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pyc_common import classify, norm, paginate, split_chi_tieu, UNKNOWN  # noqa: E402
 import pyc_fill  # noqa: E402
+import tao_bang_kq  # noqa: E402
 
 ROOT = pyc_fill.ROOT
 OUT_DIR = ROOT  # kết quả: <thư mục>\\HOA_HOC và <thư mục>\\VI_SINH
@@ -337,6 +338,51 @@ def check_codes(hoa, sinh):
     return out
 
 
+def run_json(path):
+    """1 file JSON: bảng Excel KQ (nếu có "bang_kq") + phiếu Word (trừ khi "chi_bang_kq").
+    Mẫu có "so_phieu" khác nhau -> tách thành nhiều phiếu, mỗi số 1 phiếu."""
+    import json
+    with open(path, encoding="utf-8") as f:
+        d = json.load(f)
+    tt, mau = d.get("thong_tin", {}), d.get("mau", [])
+    info, samples = read_json(path)
+    name, created, rc = os.path.basename(path), [], 0
+    bkq = tt.get("bang_kq")
+    loai_s = isinstance(bkq, dict) and str(bkq.get("loai", "H")).upper() == "S"
+    if bkq:
+        try:
+            out, n, k = tao_bang_kq.build({**info, "bang_kq": bkq}, mau, OUT_DIR)
+            print(f"\n================ BẢNG KẾT QUẢ: {name} ================")
+            print(f"\n[BANG_KQ] {n} mẫu, {k} chỉ tiêu")
+            print("   ->", os.path.relpath(out, ROOT))
+            created.append(f"{out}|1")
+        except Exception as ex:
+            print(f"\n*** Lỗi tạo bảng KQ {name}: {ex}")
+            rc = 2
+    if tt.get("chi_bang_kq"):
+        if created:
+            now = datetime.datetime.now()
+            arch = os.path.join(OUT_DIR, "DU_LIEU_NHAP", now.strftime("%Y"), now.strftime("%Y-%m"))
+            os.makedirs(arch, exist_ok=True)
+            shutil.copy2(path, os.path.join(arch, name))
+        return rc, created
+    groups = {}
+    for m, s in zip(mau, samples):
+        groups.setdefault(_cell(m.get("so_phieu", "")), []).append(s)
+    if len(groups) <= 1:
+        code, c = process(info, samples, name, path)
+        return max(rc, code), created + c
+    first = True
+    for so, lst in groups.items():
+        sub = dict(info)
+        if so:
+            sub["so_vs" if loai_s else "so_hh"] = so
+        code, c = process(sub, lst, f"{name} [{so or 'chưa số'}]", path if first else None)
+        first = False
+        rc, created = max(rc, code), created + c
+    return rc, created
+
+
 def process(info, samples, src_desc, src_path=None):
     """Tạo phiếu cho 1 bộ dữ liệu. Trả về (mã lỗi, danh sách file đã tạo)."""
     errs = validate(info, samples)
@@ -477,7 +523,7 @@ def queue_dirs():
     return [os.path.abspath(x) for x in dirs if os.path.isdir(x)]
 
 
-TOOL_FILES = ["scripts/tao_phieu.py", "scripts/pyc_common.py", "scripts/pyc_fill.py",
+TOOL_FILES = ["scripts/tao_phieu.py", "scripts/tao_bang_kq.py", "scripts/pyc_common.py", "scripts/pyc_fill.py",
               "scripts/danh_muc_chi_tieu.json",
               "mau_goc/PYC_PT_HOA_HOC_2025_11_17.docx", "mau_goc/PYC_PT_SINH_HOC_2025_11_17.docx"]
 
@@ -523,8 +569,11 @@ def main(args):
     all_created, rc = [], 0
     for path in jobs:
         try:
-            info, samples = read_json(path) if path.lower().endswith(".json") else read_input(path)
-            code, created = process(info, samples, os.path.basename(path), path)
+            if path.lower().endswith(".json"):
+                code, created = run_json(path)
+            else:
+                info, samples = read_input(path)
+                code, created = process(info, samples, os.path.basename(path), path)
         except Exception as ex:  # 1 phiếu lỗi không chặn các phiếu khác
             print(f"\n*** Lỗi khi xử lý {os.path.basename(path)}: {ex}")
             code, created = 2, []
