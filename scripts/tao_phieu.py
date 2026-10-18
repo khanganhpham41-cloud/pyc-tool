@@ -96,8 +96,63 @@ def validate(info, samples):
     return errs
 
 
+def chuan_hoa_docx(path):
+    """Chuẩn hóa nhẹ file .docx (không đổi nội dung/bố cục) để mọi trình xem (Word, Word/Zalo/WPS trên điện thoại)
+    hiển thị giống Word trên laptop:
+      - Style Normal được đánh dấu mặc định (w:default="1") như Word tự làm khi lưu;
+      - Phông mặc định của tài liệu = Times New Roman (mẫu gốc xuất từ LibreOffice để 'Liberation Serif',
+        máy/điện thoại không có phông này sẽ thay phông khác);
+      - Lề ô/viền dạng w:start/w:end (nhiều app điện thoại bỏ qua) -> w:left/w:right như Word lưu.
+    Thay cho bước LibreOffice cũ (đã làm hỏng phiếu: cỡ chữ dòng 'CỤC CHẤT LƯỢNG…' 11->10, thêm đánh số vào
+    dòng 'Phương pháp thử nghiệm…', đổi kiểu ngắt trang phiếu Vi sinh, thêm header/footer lạ, lệch cột)."""
+    import zipfile
+    tmp = path + ".tmp"
+    with zipfile.ZipFile(path) as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            n = item.filename
+            if n == "word/styles.xml":
+                x = data.decode("utf-8")
+                if not re.search(r'<w:style [^>]*w:type="paragraph"[^>]*w:default="1"', x):
+                    x = re.sub(r'<w:style w:type="paragraph" w:styleId="Normal"',
+                               '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"', x, count=1)
+
+                def _fonts(m):
+                    return re.sub(r'(w:(?:ascii|hAnsi|eastAsia|cs)=")[^"]*(")', r"\1Times New Roman\2", m.group(0))
+                x = re.sub(r"<w:rPrDefault>.*?</w:rPrDefault>",
+                           lambda m: re.sub(r"<w:rFonts [^>]*/>", _fonts, m.group(0)), x, count=1, flags=re.S)
+                data = x.encode("utf-8")
+            if n == "word/document.xml" or re.match(r"word/(header|footer)\d*\.xml$", n) or n == "word/styles.xml":
+                x = data.decode("utf-8")
+                # chỉ đổi phần tử lề/viền (có w:w= hoặc w:sz=), không đụng <w:start w:val=".."/> của đánh số
+                x = re.sub(r"<w:start ((?:[^>]*?)w:(?:w|sz)=[^>]*)/>", r"<w:left \1/>", x)
+                x = re.sub(r"<w:end ((?:[^>]*?)w:(?:w|sz)=[^>]*)/>", r"<w:right \1/>", x)
+                data = x.encode("utf-8")
+            zout.writestr(item, data)
+    os.replace(tmp, path)
+
+
+def dem_trang(path):
+    """Đếm số trang (chỉ để KIỂM TRA tràn trang khi không có Word; không sửa file .docx)."""
+    soffice = shutil.which("soffice") or shutil.which("libreoffice")
+    if not soffice:
+        return None
+    tmp = tempfile.mkdtemp()
+    try:
+        src = os.path.join(tmp, "kt.docx")
+        shutil.copy2(path, src)
+        os.system(f'"{soffice}" --headless --convert-to pdf --outdir "{tmp}" "{src}" >/dev/null 2>&1')
+        pdf = os.path.join(tmp, "kt.pdf")
+        if not os.path.exists(pdf):
+            return None
+        raw = open(pdf, "rb").read()
+        return len(re.findall(rb"/Type\s*/Page[^s]", raw)) or None
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def relaunder_linux(path):
-    """Chỉ dùng khi test trên Linux; trên Windows file .bat sẽ cho Word mở & lưu lại."""
+    """KHÔNG còn dùng mặc định (làm hỏng định dạng phiếu). Giữ lại để đối chiếu: đặt biến RELAUNDER=1."""
     soffice = shutil.which("soffice")
     if not soffice:
         return False
@@ -448,8 +503,17 @@ def process(info, samples, src_desc, src_path=None):
                 {os.path.normcase(os.path.abspath(f)) for f in old_files}):
             out = unique_path(out)   # chỉ ghi đè đúng file của phiếu cũ cùng khách hàng
         sizes = make_form(kind, info, [dict(x) for x in lst], per, out, warnings)
-        if sys.platform != "win32" and len(sizes) > 1 and not os.environ.get("NO_RELAUNDER"):
-            relaunder_linux(out)
+        chuan_hoa_docx(out)
+        if sys.platform != "win32":
+            # Không có Word (điện thoại/máy chủ): không lưu lại bằng LibreOffice nữa, chỉ đếm trang để báo tràn trang
+            if os.environ.get("RELAUNDER"):
+                relaunder_linux(out)
+            n_tr = dem_trang(out)
+            if n_tr and n_tr != len(sizes) + 1:
+                warnings.append(f"TRÀN TRANG: phiếu ra {n_tr} trang, đúng ra {len(sizes) + 1} — giảm số mẫu/trang "
+                                f"(per_hoa/per_sinh trong JSON) rồi tạo lại")
+            elif n_tr:
+                print(f"   (kiểm tra: {n_tr} trang, đúng số trang)")
         created.append(f"{out}|{len(sizes) + 1}")
         cts = []
         for x in lst:
