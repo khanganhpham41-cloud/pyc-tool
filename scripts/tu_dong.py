@@ -67,33 +67,80 @@ def thong_bao(tieu_de, noi_dung):
 
 
 def thu_muc_cap_nhat():
-    ds = [os.path.join(ROOT, "CAP_NHAT")]
-    d = tao_phieu.drive_dir()
-    if d:
-        ds.append(os.path.join(d, "CAP_NHAT"))
-    return [x for x in ds if os.path.isdir(x)]
+    # CHỈ thư mục trên laptop — không nhận từ Drive (ai ghi được vào Drive sẽ chạy được code trên máy cơ quan)
+    d = os.path.join(ROOT, "CAP_NHAT")
+    return [d] if os.path.isdir(d) else []
+
+
+def _kiem_tra_py(path):
+    """Bản .py mới phải biên dịch được; tu_dong.py còn phải chạy được thật (--kiem-tra) trước khi thay."""
+    import py_compile
+    import tempfile
+    try:
+        py_compile.compile(path, cfile=os.path.join(tempfile.gettempdir(), "_pyc_kiem_tra.pyc"), doraise=True)
+    except py_compile.PyCompileError as ex:
+        return f"lỗi cú pháp: {str(ex).strip()[:200]}"
+    return None
+
+
+def _thu_chay_tu_dong(path):
+    try:
+        r = subprocess.run([_python(), path, "--kiem-tra"], cwd=ROOT, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", creationflags=NO_WINDOW, timeout=60)
+        return None if r.returncode == 0 and "KIEM_TRA_OK" in r.stdout else (r.stdout + r.stderr).strip()[-300:]
+    except Exception as ex:
+        return str(ex)
 
 
 def ap_dung_cap_nhat():
-    """Chép file công cụ mới từ CAP_NHAT (laptop hoặc Drive) đè lên bản đang dùng, ghi md5 vào KET_QUA\\CAP_NHAT.txt.
-    Trả về True nếu chính tu_dong.py vừa được cập nhật (cần khởi động lại)."""
+    """Chép file công cụ mới từ CAP_NHAT (laptop) đè lên bản đang dùng (giữ .bak), ghi md5 vào KET_QUA\\CAP_NHAT.txt.
+    File .py lỗi -> KHÔNG chép, đổi đuôi .LOI. Trả về True nếu chính tu_dong.py vừa được cập nhật (cần khởi động lại)."""
     import hashlib
     import shutil
     now, xong, tu_khoi_dong = time.time(), [], False
     for d in thu_muc_cap_nhat():
         for f in sorted(os.listdir(d)):
             src = os.path.join(d, f)
-            if not os.path.isfile(src) or f.startswith(("~", ".")) or now - os.path.getmtime(src) < CHO_ON_DINH:
+            if (not os.path.isfile(src) or f.startswith(("~", ".")) or f.upper().endswith(".LOI")
+                    or now - os.path.getmtime(src) < CHO_ON_DINH):
                 continue
             rel = f.replace("__", "/")
             ok = (".." not in rel and rel.lower().endswith(DUOI_CAP_NHAT)
                   and (rel.startswith(CHO_PHEP_CAP_NHAT) or "/" not in rel))
             if not ok:
+                try:
+                    os.replace(src, src + ".LOI")
+                except OSError:
+                    pass
                 xong.append(f"!  Bỏ qua {f} (tên không hợp lệ — dạng đúng: scripts__ten.py)")
                 continue
             dst = os.path.join(ROOT, *rel.split("/"))
+            loi = None
+            if rel.endswith(".py"):
+                loi = _kiem_tra_py(src)
+                if not loi and rel == "scripts/tu_dong.py":
+                    thu = os.path.join(HERE, "_tu_dong_moi.py")
+                    shutil.copyfile(src, thu)
+                    loi = _thu_chay_tu_dong(thu)
+                    os.remove(thu)
+            elif rel.endswith(".json"):
+                try:
+                    import json
+                    with open(src, encoding="utf-8-sig") as fh:
+                        json.load(fh)
+                except Exception as ex:
+                    loi = f"JSON lỗi: {ex}"
+            if loi:
+                try:
+                    os.replace(src, src + ".LOI")
+                except OSError:
+                    pass
+                xong.append(f"!  KHÔNG cập nhật {rel} — {loi} (bản đang dùng giữ nguyên)")
+                continue
             try:
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
+                if os.path.exists(dst):
+                    shutil.copyfile(dst, dst + ".bak")
                 shutil.copyfile(src, dst)
                 with open(dst, "rb") as fh:
                     md5 = hashlib.md5(fh.read()).hexdigest()
@@ -180,7 +227,24 @@ def chay_mot_lan(da_loi):
     env = dict(os.environ, PYTHONIOENCODING="utf-8")
     ds = os.path.join(HERE, "_danh_sach_file_moi.txt")
     out, tao, tung_lo = "", [], []
-    for p, _ in moi:
+    viec = [p for p, _ in moi]
+    for p in viec:                     # xóa kết quả cũ cùng tên ngay khi nhận lô -> không ai đọc nhầm kết quả lần trước
+        try:
+            os.remove(os.path.join(KQ_DIR, os.path.splitext(os.path.basename(p))[0] + ".txt"))
+        except OSError:
+            pass
+    nhap = os.path.join(ROOT, "NHAP_MAU.xlsx")   # giữ cách nhập Excel cũ: có dữ liệu thì xử lý kèm
+    if os.path.exists(nhap):
+        try:
+            if tao_phieu.read_input(nhap)[1]:
+                viec.append(nhap)
+        except Exception:
+            pass                       # đang mở/đang ghi dở -> lần sau
+    for p in viec:
+        try:
+            os.remove(ds)              # không đọc nhầm danh sách của lô trước nếu lô này lỗi giữa chừng
+        except OSError:
+            pass
         try:
             r = subprocess.run([_python(), os.path.join(HERE, "tao_phieu.py"), p], cwd=ROOT, env=env,
                                capture_output=True, text=True, encoding="utf-8", errors="replace",
@@ -233,6 +297,10 @@ def chay_mot_lan(da_loi):
 
 def main():
     global LOCK
+    if "--kiem-tra" in sys.argv:          # dùng khi nhận bản cập nhật: chỉ kiểm tra chạy được
+        tao_phieu.queue_dirs()
+        print("KIEM_TRA_OK")
+        return
     if "--mot-lan" in sys.argv:
         ap_dung_cap_nhat()
         chay_mot_lan(set())
