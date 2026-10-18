@@ -1,5 +1,5 @@
 {
- "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!). QUY TẮC: chỉ tiêu ghi tên chất cụ thể thì giữ đúng tên chất, KHÔNG gộp vào tên nhóm '(nhóm)' hay chất khác — tên nhóm làm lab hiểu nhầm chạy cả nhóm. Alias của khóa nhóm chỉ là cách gọi nhóm. MG, LMG, CV, LCV, Enrofloxacin, Ciprofloxacin chạy rời — mỗi chất 1 cột riêng (Vinh chốt 18/10/2026). V.cholerae O1 và O139 là 2 chỉ tiêu riêng, 2 cột.",
+ "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!). QUY TẮC: chỉ tiêu ghi tên chất cụ thể thì giữ đúng tên chất, KHÔNG gộp vào tên nhóm '(nhóm)' hay chất khác — tên nhóm làm lab hiểu nhầm chạy cả nhóm. Alias của khóa nhóm chỉ là cách gọi nhóm. MG, LMG, CV, LCV, Enrofloxacin, Ciprofloxacin chạy rời — mỗi chất 1 cột riêng (Vinh chốt 18/10/2026). V.cholerae O1 và O139 là 2 chỉ tiêu riêng, 2 cột. BORATE (Vinh chốt 18/10/2026): in theo cách khách ghi — 'Borate' hoặc 'Hàn the (Borate)'; không ghi gì = ĐỊNH TÍNH (in không kèm chữ định tính). Định lượng là phương pháp khác: chỉ khi khách yêu cầu, in kèm 'định lượng'. Trimethoprim: STT 174 file '107 new'.",
  "hoa": {
   "Aflatoxin B1": [
    "aflatoxin b1",
@@ -48,7 +48,7 @@
    "caffeine",
    "cafeine"
   ],
-  "Hàn the (Borat)": [
+  "Hàn the (Borate)": [
    "hàn the",
    "borat",
    "acid boric",
@@ -56,7 +56,23 @@
    "boric acid",
    "boric axit",
    "muối borat",
-   "boric axit và muối borate"
+   "boric axit và muối borate",
+   "hàn the (borat)",
+   "hàn the (borate)",
+   "hàn the định tính",
+   "định tính hàn the",
+   "hàn the (định tính)"
+  ],
+  "Hàn the (Borate) - định lượng": [
+   "hàn the định lượng",
+   "định lượng hàn the",
+   "hàn the (định lượng)",
+   "hàn the (borate) định lượng",
+   "hàn the (borate) - định lượng",
+   "định lượng acid boric",
+   "acid boric định lượng",
+   "định lượng axit boric",
+   "axit boric định lượng"
   ],
   "Formaldehyde": [
    "formaldehyde",
@@ -792,7 +808,20 @@
   ],
   "Borate": [
    "borate",
-   "borax"
+   "borax",
+   "định tính borate",
+   "borate định tính",
+   "borate (định tính)",
+   "định tính borax",
+   "borax định tính"
+  ],
+  "Borate (định lượng)": [
+   "định lượng borate",
+   "borate định lượng",
+   "borate (định lượng)",
+   "định lượng borax",
+   "borax định lượng",
+   "borax (định lượng)"
   ],
   "Tetracycline": [
    "tetracycline",
@@ -806,6 +835,11 @@
    "natri benzoate",
    "sodium benzoate",
    "sodium benzoat"
+  ],
+  "Trimethoprim": [
+   "trimethoprim",
+   "trimetoprim",
+   "trimethoprime"
   ]
  },
  "sinh_them": {
