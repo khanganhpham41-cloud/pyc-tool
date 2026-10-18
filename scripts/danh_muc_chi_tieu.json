@@ -1,5 +1,5 @@
 {
- "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!). QUY TẮC: chỉ tiêu ghi tên chất cụ thể thì giữ đúng tên chất, KHÔNG gộp vào tên nhóm '(nhóm)' hay chất khác — tên nhóm làm lab hiểu nhầm chạy cả nhóm. Alias của khóa nhóm chỉ là cách gọi nhóm.",
+ "_ghi_chu": "Tên chuẩn in lên phiếu, theo Phụ lục GCN 1586/TĐC-HCHQ ngày 08/5/2024 (file '107 new.pdf'). Sửa/thêm được: khóa = tên in trên phiếu, danh sách = các cách ghi hay gặp (không phân biệt hoa thường, dấu, khoảng trắng). Tên Hóa không có trong danh mục vẫn in nguyên văn nhưng có cảnh báo (!). QUY TẮC: chỉ tiêu ghi tên chất cụ thể thì giữ đúng tên chất, KHÔNG gộp vào tên nhóm '(nhóm)' hay chất khác — tên nhóm làm lab hiểu nhầm chạy cả nhóm. Alias của khóa nhóm chỉ là cách gọi nhóm. MG, LMG, CV, LCV, Enrofloxacin, Ciprofloxacin chạy rời — mỗi chất 1 cột riêng (Vinh chốt 18/10/2026). V.cholerae O1 và O139 là 2 chỉ tiêu riêng, 2 cột.",
  "hoa": {
   "Aflatoxin B1": [
    "aflatoxin b1",
@@ -202,21 +202,25 @@
    "sem",
    "nitrofurazone"
   ],
-  "Malachite Green & LMG": [
+  "Malachite Green": [
    "malachite green",
-   "lmg",
-   "leuco malachite green",
-   "malachite green và leuco malachite green",
-   "mg lmg",
+   "mg",
    "xanh malachite"
   ],
-  "Crystal Violet & LCV": [
+  "Leuco Malachite Green": [
+   "leuco malachite green",
+   "lmg",
+   "leucomalachite green"
+  ],
+  "Crystal Violet": [
    "crystal violet",
    "cv",
-   "lcv",
+   "gentian violet"
+  ],
+  "Leuco Crystal Violet": [
    "leuco crystal violet",
-   "gentian violet",
-   "crystal violet và leuco crystal violet"
+   "lcv",
+   "leucocrystal violet"
   ],
   "Brilliant Green": [
    "brilliant green",
@@ -890,6 +894,20 @@
    "hepatitis a",
    "hav",
    "viêm gan a"
+  ],
+  "V.cholerae O1": [
+   "v.cholerae o1",
+   "v. cholerae o1",
+   "vibrio cholerae o1",
+   "v.cholerae 01",
+   "v. cholerae 01"
+  ],
+  "V.cholerae O139": [
+   "v.cholerae o139",
+   "v. cholerae o139",
+   "vibrio cholerae o139",
+   "v.cholerae 0139",
+   "v. cholerae 0139"
   ]
  }
 }
