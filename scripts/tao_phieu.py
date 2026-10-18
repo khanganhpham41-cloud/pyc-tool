@@ -502,18 +502,26 @@ def process(info, samples, src_desc, src_path=None):
         if not (so and os.path.normcase(os.path.abspath(out)) in
                 {os.path.normcase(os.path.abspath(f)) for f in old_files}):
             out = unique_path(out)   # chỉ ghi đè đúng file của phiếu cũ cùng khách hàng
-        sizes = make_form(kind, info, [dict(x) for x in lst], per, out, warnings)
-        chuan_hoa_docx(out)
-        if sys.platform != "win32":
-            # Không có Word (điện thoại/máy chủ): không lưu lại bằng LibreOffice nữa, chỉ đếm trang để báo tràn trang
+        base_warn = list(warnings)
+        while True:
+            warnings = list(base_warn)
+            sizes = make_form(kind, info, [dict(x) for x in lst], per, out, warnings)
+            chuan_hoa_docx(out)
+            if sys.platform == "win32":
+                break
+            # Không có Word (điện thoại/máy chủ): đếm trang; tràn thì TỰ giảm số mẫu/trang 1 bậc và tạo lại
             if os.environ.get("RELAUNDER"):
                 relaunder_linux(out)
             n_tr = dem_trang(out)
             if n_tr and n_tr != len(sizes) + 1:
-                warnings.append(f"TRÀN TRANG: phiếu ra {n_tr} trang, đúng ra {len(sizes) + 1} — giảm số mẫu/trang "
-                                f"(per_hoa/per_sinh trong JSON) rồi tạo lại")
+                if per > 1:
+                    print(f"   (tràn trang ở {per} mẫu/trang — tự giảm còn {per - 1})")
+                    per -= 1
+                    continue
+                warnings.append(f"TRÀN TRANG: phiếu ra {n_tr} trang dù 1 mẫu/trang — kiểm tra mô tả/chỉ tiêu quá dài")
             elif n_tr:
                 print(f"   (kiểm tra: {n_tr} trang, đúng số trang)")
+            break
         created.append(f"{out}|{len(sizes) + 1}")
         cts = []
         for x in lst:
@@ -665,5 +673,23 @@ def main(args):
     return 0 if all_created else rc
 
 
+GON_GIU = ("====", "[", "Chỉ tiêu:", "!", "->", "***", "-")
+
+
+def loc_gon(text):
+    """Chỉ giữ dòng cần báo: tiêu đề kết quả, loại phiếu, chỉ tiêu, cảnh báo, đường dẫn file, lỗi."""
+    return "\n".join(ln for ln in text.splitlines() if ln.strip().startswith(GON_GIU))
+
+
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    args = sys.argv[1:]
+    if "--gon" in args:            # in gọn: dùng khi Claude chạy (tiết kiệm token)
+        import contextlib
+        import io
+        args = [a for a in args if a != "--gon"]
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = main(args)
+        print(loc_gon(buf.getvalue()))
+        sys.exit(rc)
+    sys.exit(main(args))
